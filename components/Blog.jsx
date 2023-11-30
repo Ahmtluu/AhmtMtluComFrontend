@@ -1,28 +1,12 @@
+import { useGetPostsQuery } from "@/app/Redux/services/post";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function Blog() {
-  const [articles, setArticle] = useState([]);
-  const [isSuccessed, setSuccessStatus] = useState(false);
-  const [isLoading, setLoadingStatus] = useState(true);
 
-  const [isError, setErrorStatus] = useState(false);
+  const { data, error, isLoading } = useGetPostsQuery();
+  console.log(data);
 
-  const getArticles = async () => {
-    await axios(`${process.env.API_URL}/api/get_all_articles`)
-      .then((res) => {
-        articles.value = res.data.posts.data;
-        setSuccessStatus(true);
-      })
-      .catch((e) => {
-        setErrorStatus(true);
-      });
-    setLoadingStatus(false);
-  };
-
-  useEffect(() => {
-    getArticles();
-  }, []);
 
   return (
     <section class=" pb-32">
@@ -32,33 +16,38 @@ export default function Blog() {
             Yazılar
           </h1>
 
-          <a
-            v-if="isSuccessed && articles.length !== 0"
-            href="/blog"
-            class="px-6 py-2 font-medium tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
-          >
-            Tümü
-          </a>
+          {
+            data && data.length !== 0 && (
+              <a
+
+                href="/blog"
+                class="px-6 py-2 font-medium tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
+              >
+                Tümü
+              </a>
+            )
+          }
+
         </div>
 
         <hr class="my-8 border-gray-200 " />
 
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {articles && articles.length == 0 && !isError && (
+          {data && data.length == 0 && !error && (
             <h3 class="font-bold uppercase text-gray-900">
               Henüz herhangi bir yazı hazırlanmamıştır
             </h3>
           )}
 
-          {isError && (
+          {error && (
             <h3 class="font-bold uppercase text-gray-900">
               Şu anda maalesef yazılara ulaşılamıyor lütfen daha sonra tekrar
               deneyiniz!
             </h3>
           )}
 
-          {articles &&
-            articles.map((article, index) => {
+          {data &&
+            data.map((article, index) => {
               return (
                 <div
                   key={article.id}

@@ -3,44 +3,29 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import Link from "next/link";
+import { useGetPostsQuery } from "../Redux/services/post";
+
 require("dotenv").config();
 
 export default function Blog() {
   const [articles, setArticles] = useState([]);
-  const [isError, setErrorStatus] = useState(false);
-  const [isLoading, setLoadingStatus] = useState(true);
   const [loadingPost, setLoadingPost] = useState([1, 2, 3]);
+  const { data, error, isLoading } = useGetPostsQuery();
 
   function formatDate(date) {
     return moment(String(date)).format("DD-MM-YYYY");
   }
 
-  const getArticles = async () => {
-    try {
-      await axios(
-        `${process.env.API_URL}/api/get_paginated_articles?page=${this.$route.query.page}`
-      ).then((res) => {
-        setArticles(res.data.posts);
-        if (articles.last_page < this.$route.query.page) {
-          this.$router.push({ name: "Bulunamadı" });
-        }
-        setLoadingStatus(false);
-      });
-    } catch (error) {
-      setErrorStatus(true);
-      setLoadingStatus(false);
-    }
-  };
-  useEffect(() => {
-    getArticles();
-  }, []);
+  console.log(data)
+
+
 
   return (
     <section className="">
       <div className="container py-0 mt-32 lg:h-screen mx-auto block lg:flex">
         <div className="lg:w-9/12 w-full">
           {isLoading &&
-            !isError &&
+            !error &&
             loadingPost.map((article, index) => {
               return (
                 <div
@@ -74,16 +59,16 @@ export default function Blog() {
               );
             })}
           {!isLoading &&
-            !isError &&
+            !error &&
             articles.data.length ===
-              0(
-                <h3 className="font-bold uppercase text-slate-700 mt-28">
-                  Henüz herhangi bir yazı hazırlanmamıştır
-                </h3>
-              )}
+            0(
+              <h3 className="font-bold uppercase text-slate-700 mt-28">
+                Henüz herhangi bir yazı hazırlanmamıştır
+              </h3>
+            )}
 
           {!isLoading &&
-            !isError &&
+            !error &&
             articles &&
             articles.data.map((article, index) => {
               return (
@@ -200,7 +185,7 @@ export default function Blog() {
                 </>
               );
             })}
-          {isError && (
+          {error && (
             <h3 class="font-bold uppercase text-gray-900 px-6">
               Şu anda maalesef yazılara ulaşılamıyor lütfen daha sonra tekrar
               deneyiniz!

@@ -1,27 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProjectSkeloton from "./Skeletons/ProjectSkeloton";
+import { useGetProjectsQuery } from "@/app/Redux/services/project";
 
 require("dotenv").config();
 
 export default function Project() {
-  const [projects, setProjects] = useState([]);
-  const [isError, setError] = useState(false);
-  const [isLoading, setLoading] = useState(true);
 
-  const GetProjects = async () => {
-    await axios
-      .get(`${process.env.API_URL}/api/get_all_projects`)
-      .then((res) => {
-        setProjects(response.data.projects.data);
-        setLoading(false);
-      })
-      .catch((err) => setError(true));
-  };
 
-  useEffect(() => {
-    GetProjects();
-  }, []);
+  const { data, error, isLoading } = useGetProjectsQuery();
+  console.log(data);
+
 
   return (
     <section className=" my-24">
@@ -36,13 +25,13 @@ export default function Project() {
         </p>
         {!isLoading && (
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.length === 0 && (
+            {data && data.length === 0 && (
               <h3 className="font-bold uppercase text-slate-700 mt-28">
                 Henüz herhangi bir proje yayımlanmamış
               </h3>
             )}
 
-            {projects.map((project, index) => {
+            {data && data.map((project, index) => {
               return (
                 <a href={project.slug} className=" ">
                   <div className="relative group transform transition hover:scale-105 duration-700 bg-slate-700">
@@ -62,8 +51,8 @@ export default function Project() {
           </div>
         )}
 
-        {isLoading && !isError && <ProjectSkeloton />}
-        {isError && (
+        {isLoading && !error && <ProjectSkeloton />}
+        {error && (
           <h3 class="font-bold uppercase text-gray-900">
             Şu anda maalesef projelere ulaşılamıyor lütfen daha sonra tekrar
             deneyiniz!
