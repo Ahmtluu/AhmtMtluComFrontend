@@ -40,9 +40,8 @@ export default function AppHeader() {
 
   return (
     <header
-      className={`header fixed top-0 inset-x-0 shadow-sm backdrop-blur-lg bg-grey/80 z-50 ${
-        showHeader ? "" : "is-hidden"
-      }`}
+      className={`header fixed top-0 inset-x-0 shadow-sm backdrop-blur-lg bg-grey/80 z-50 ${showHeader ? "" : "is-hidden"
+        }`}
     >
       <nav
         className="flex items-center lg:justify-around justify-between p-6"
@@ -122,6 +121,7 @@ export default function AppHeader() {
                       return (
                         <Transition.Child
                           as={Fragment}
+                          key={index}
                           enter="ease-out duration-300"
                           enterFrom="opacity-0 scale-95"
                           enterTo="opacity-100 scale-100"
@@ -130,7 +130,6 @@ export default function AppHeader() {
                           leaveTo="opacity-0 scale-95"
                         >
                           <Link
-                            key={index}
                             className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-700 hover:bg-gray-50"
                             href={`${item.href}`}
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

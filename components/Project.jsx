@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import ProjectSkeloton from "./Skeletons/ProjectSkeloton";
 import { useGetProjectsQuery } from "@/app/Redux/services/project";
 
 require("dotenv").config();
 
 export default function Project() {
-
-
   const { data, error, isLoading } = useGetProjectsQuery();
-  console.log(data);
-
-
   return (
     <section className=" my-24">
       <div className="container lg:px-6 px-0 py-10 mx-auto">
@@ -23,15 +17,15 @@ export default function Project() {
           Sadece kod yazmakla kalmıyor, aynı zamanda projelerinizi hayata
           geçirmek için stratejik düşünce ve yaratıcı yaklaşımlar kullanıyorum.
         </p>
-        {!isLoading && (
+        {!isLoading && !error && (
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 lg:grid-cols-3">
-            {data && data.length === 0 && (
+            {data && data.projects.data.length === 0 && (
               <h3 className="font-bold uppercase text-slate-700 mt-28">
                 Henüz herhangi bir proje yayımlanmamış
               </h3>
             )}
 
-            {data && data.map((project, index) => {
+            {!isLoading && data && data.projects.data.map((project, index) => {
               return (
                 <a href={project.slug} className=" ">
                   <div className="relative group transform transition hover:scale-105 duration-700 bg-slate-700">
@@ -53,7 +47,7 @@ export default function Project() {
 
         {isLoading && !error && <ProjectSkeloton />}
         {error && (
-          <h3 class="font-bold uppercase text-gray-900">
+          <h3 className="font-bold uppercase text-gray-900">
             Şu anda maalesef projelere ulaşılamıyor lütfen daha sonra tekrar
             deneyiniz!
           </h3>

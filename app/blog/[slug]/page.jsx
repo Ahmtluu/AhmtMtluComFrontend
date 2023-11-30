@@ -1,39 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import DOMPurify from "dompurify";
+import { useGetPostBySlugQuery } from "@/app/Redux/services/post";
 
-export default function Page() {
-  const [article, setArticle] = useState([]);
-  const [isError, setErrorStatus] = useState(false);
-  const [isLoading, setLoadingStatus] = useState(true);
-
-  const getArticle = async () => {
-    try {
-      await axios
-        .get(
-          `${this.config.public.apiUrl}/api/article/${this.$route.params.slug}`
-        )
-        .then((res) => {
-          setArticle(res.data.article);
-          if (article == null) {
-            this.$router.push({ name: "Bulunamadı" });
-          }
-          setSuccessStatus(true);
-        });
-    } catch (error) {
-      setErrorStatus(true);
-      setLoadingStatus(false);
-    }
-  };
-
-  useEffect(() => {
-    getArticle();
-  }, []);
+export default function Page(props) {
+  const { data, error, isLoading } = useGetPostBySlugQuery(props.slug);
 
   return (
     <section class="">
       <div class="container px-6 py-32 mx-auto ">
-        {!isError && isLoading && (
+        {!error && isLoading && (
           <div>
             <svg
               aria-hidden="true"
@@ -55,26 +31,26 @@ export default function Page() {
           </div>
         )}
         <div class="lg:flex lg:-mx-6">
-          {!isError && article && (
+          {!error && data && (
             <div class="lg:w-3/4 lg:px-6">
               <img
                 class="object-cover object-center w-full h-80 xl:h-[28rem] rounded-xl"
                 alt=""
-                src={`${process.env.API_URL}/storage/${article.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${data.image}`}
               />
               <p class="mt-6 text-sm text-[#008080] uppercase"></p>
 
               <h1 class="max-w-lg mt-4 text-2xl font-semibold leading-tight text-gray-800 ">
-                {article.title}
+                {data.title}
               </h1>
 
               <div class="flex items-center mt-6">
-                <p v-html="article.body"></p>
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.body) }}></div>
               </div>
             </div>
           )}
         </div>
-        {isError && (
+        {error && (
           <h3 class="font-bold uppercase text-gray-900">
             Şu anda maalesef aramış olduğunuz yazıya ulaşılamıyor lütfen daha
             sonra tekrar deneyiniz!

@@ -1,28 +1,21 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import moment from "moment";
 import Link from "next/link";
-import { useGetPostsQuery } from "../Redux/services/post";
-
-require("dotenv").config();
+import { useGetPaginatedPostsQuery } from "../Redux/services/post";
 
 export default function Blog() {
-  const [articles, setArticles] = useState([]);
-  const [loadingPost, setLoadingPost] = useState([1, 2, 3]);
-  const { data, error, isLoading } = useGetPostsQuery();
+
+  const { data, error, isLoading } = useGetPaginatedPostsQuery();
+  const loadingPost = ["item1", "item2", "item3"]
 
   function formatDate(date) {
     return moment(String(date)).format("DD-MM-YYYY");
   }
 
-  console.log(data)
-
-
-
   return (
     <section className="">
-      <div className="container py-0 mt-32 lg:h-screen mx-auto block lg:flex">
+      <div className="container py-0 mt-32 lg:h-4/5 mx-auto block lg:flex px-6">
         <div className="lg:w-9/12 w-full">
           {isLoading &&
             !error &&
@@ -60,17 +53,16 @@ export default function Blog() {
             })}
           {!isLoading &&
             !error &&
-            articles.data.length ===
-            0(
-              <h3 className="font-bold uppercase text-slate-700 mt-28">
+            data.posts.data.length === 0 && (
+              <h3 className="flex justify-center items-center font-bold uppercase text-slate-700 mt-28">
                 Henüz herhangi bir yazı hazırlanmamıştır
               </h3>
             )}
 
           {!isLoading &&
             !error &&
-            articles &&
-            articles.data.map((article, index) => {
+            data &&
+            data.posts.data.map((article, index) => {
               return (
                 <>
                   <div
@@ -119,9 +111,9 @@ export default function Blog() {
                   <div className="border-b-2 my-6" />
                   <div className="flex justify-between">
                     <div className="flex">
-                      {articles && articles.prev_page_url !== null && (
+                      {data.posts && data.posts.prev_page_url !== null && (
                         <a
-                          href={`/yazilar?page=${articles.current_page - 1}`}
+                          href={`/yazilar?page=${data.posts.current_page - 1}`}
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
@@ -133,9 +125,9 @@ export default function Blog() {
                               stroke="currentColor"
                             >
                               <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="M7 16l-4-4m0 0l4-4m-4 4h18"
                               />
                             </svg>
@@ -146,14 +138,14 @@ export default function Blog() {
                       )}
 
                       <a
-                        href={`/yazilar?page=${articles.current_page}`}
+                        href={`/yazilar?page=${data.posts.current_page}`}
                         className="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform border border-slate-700 bg-white sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-500 hover:text-white dark:hover:text-gray-200"
                       >
-                        {articles.current_page}
+                        {data.posts.current_page}
                       </a>
-                      {articles && articles.next_page_url !== null && (
+                      {data.posts && data.posts.next_page_url !== null && (
                         <a
-                          href={`/yazilar?page=${articles.current_page + 1}`}
+                          href={`/yazilar?page=${data.posts.current_page + 1}`}
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
@@ -167,9 +159,9 @@ export default function Blog() {
                               stroke="currentColor"
                             >
                               <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="M17 8l4 4m0 0l-4 4m4-4H3"
                               />
                             </svg>
@@ -179,7 +171,7 @@ export default function Blog() {
                     </div>
 
                     <p className="flex justify-center items-center text-slate-700 font-semibold">
-                      Toplam sayfa: {articles.last_page}
+                      Toplam sayfa: {data.posts.last_page}
                     </p>
                   </div>
                 </>

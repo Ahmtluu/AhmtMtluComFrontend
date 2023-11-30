@@ -46,7 +46,7 @@ export default function Technologies() {
           "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/2560px-PHP-logo.svg.png",
         color: "text-[#0C4A6E]",
         hovercolor: "hover:border-[#0C4A6E]",
-        attributes: "lg:w-64 lg:h-40",
+        attributes: "",
       },
       {
         name: "TailwindCSS",
@@ -93,7 +93,7 @@ export default function Technologies() {
           "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1969px-Laravel.svg.png",
         color: "text-[#E11D48]",
         hovercolor: "hover:border-[#E11D48]",
-        attributes: "lg:h-48",
+        attributes: "lg:h-42",
       },
       {
         name: "NextJS",
@@ -110,25 +110,25 @@ export default function Technologies() {
   ];
 
   return (
-    <section class="text-gray-600 body-font">
-      <div class="container px-5 lg:py-24 py:6 mx-auto">
-        <div class="flex flex-wrap w-full lg:mb-20 mb-8 flex-col items-center text-center">
-          <h1 class="sm:text-3xl text-2xl name-font mb-2 text-[#008080] text-center lg:w-1/2 sm:w-full font-black">
+    <section className="text-gray-600 body-font">
+      <div className="container px-5 lg:py-24 py:6 mx-auto">
+        <div className="flex flex-wrap w-full lg:mb-20 mb-8 flex-col items-center text-center">
+          <h1 className="sm:text-3xl text-2xl name-font mb-2 text-[#008080] text-center lg:w-1/2 sm:w-full font-black">
             İşte bu, BENİM DÜNYAM!
           </h1>
-          <h1 class="sm:text-3xl text-2xl name-font mb-2 text-[#008080] text-center lg:w-1/2 sm:w-full font-black">
+          <h1 className="sm:text-3xl text-2xl name-font mb-2 text-[#008080] text-center lg:w-1/2 sm:w-full font-black">
             <code>&lt;?php echo "Hello World"; ?&gt;</code>
           </h1>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:gap-16 gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:gap-16 gap-12">
           {technologies.map((technology, index) => {
             return (
-              <div class="grid gap-8 lg:p-16 p-2">
+              <div className="grid gap-8 lg:p-16 p-2">
                 {technology.map((tech, index) => {
                   return (
                     <a href={tech.url}>
                       <img
-                        class={`rounded-lg ${tech.attributes}`}
+                        className={`rounded-lg ${tech.attributes}`}
                         src={tech.image}
                         alt=""
                       />

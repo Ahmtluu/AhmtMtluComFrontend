@@ -1,7 +1,6 @@
 'use client'
 
 import { configureStore } from '@reduxjs/toolkit'
-// Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { postApi } from './services/post'
 import { projectApi } from './services/project'
