@@ -119,9 +119,9 @@ export default function About() {
               <p class="py-4 font-bold">Teşekkür ederim 🙏</p>
             </div>
           </div>
-          <div class="lg:max-w-lg lg:w-full md:w-1/2 w-full py-4">
+          <div class="lg:max-w-lg lg:w-full md:w-1/2 w-full py-4 lg:mt-0 mt-32 flex justify-center z-50">
             <img
-              class="object-contain w-full h-[32rem]"
+              class=" h-[16rem] lg:h-[32rem] rounded-md"
               src={`${process.env.NEXT_PUBLIC_API_URL}/storage/static/ahmtmtlu.jpg`}
               alt="me"
             />

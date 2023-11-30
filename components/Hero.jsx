@@ -120,7 +120,7 @@ export default function Hero() {
       </div>
       <div className="flex items-center justify-center w-full lg:w-1/2">
         <img
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full rounded-md"
           src={`${process.env.NEXT_PUBLIC_API_URL}/storage/static/hero-background.jpg`}
           alt="hero-background"
         />

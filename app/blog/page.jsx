@@ -22,7 +22,7 @@ export default function Blog() {
             loadingPost.map((article, index) => {
               return (
                 <div
-                  className="flex bg-white transition hover:shadow-xl mb-8 animate-pulse"
+                  className="flex shadow-sm backdrop-blur-lg bg-grey/80 transition hover:shadow-xl mb-8 animate-pulse"
                   key={article}
                 >
                   <div className="rotate-180 p-2 [writing-mode:_vertical-lr]">
