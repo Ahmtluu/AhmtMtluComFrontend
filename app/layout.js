@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
         <BlurBackground />
         <AppHeader />
         <Providers >
-          <div className="mx-auto lg:px-32 px-6">
+          <div className="mx-auto lg:px-32 px-6 ">
             {children}
           </div>
         </Providers>

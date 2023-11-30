@@ -19,7 +19,7 @@ const services = [
 
 export default function About() {
   return (
-    <div>
+    <div className="lg:mb-0 mb-12">
 
       <div class="container px-6 py-0 lg:py-32 mx-auto block lg:flex">
         <div class="mx-auto flex md:flex-row flex-col-reverse items-start">
@@ -68,7 +68,7 @@ export default function About() {
               </p>
             </div>
 
-            <div class="w-full my-4">
+            <div class="w-full my-4 ">
               <div class="lg:max-w-lg animate-fade-up">
                 <h2 class="sm:text-3xl text-2xl my-4 font-medium text-[#008080]">
                   Neler Sunuyorum
@@ -84,7 +84,7 @@ export default function About() {
                     return (
                       <div
                         key={index}
-                        class="flex items-center text-gray-800 -px-3"
+                        class="flex items-center text-gray-800 -px-3 text-left"
                       >
                         <svg
                           class="w-5 h-5 mx-3"
@@ -119,7 +119,7 @@ export default function About() {
               <p class="py-4 font-bold">Teşekkür ederim 🙏</p>
             </div>
           </div>
-          <div class="lg:max-w-lg lg:w-full md:w-1/2 w-full py-4 lg:mt-0 mt-32 flex justify-center z-50">
+          <div class="lg:max-w-lg lg:w-full md:w-1/2 w-full py-4 lg:mt-0 mt-32 flex justify-center ">
             <img
               class=" h-[16rem] lg:h-[32rem] rounded-md"
               src={`${process.env.NEXT_PUBLIC_API_URL}/storage/static/ahmtmtlu.jpg`}

@@ -27,7 +27,7 @@ export default function Contact() {
   }
 
   return (
-    <div class="container px-6 lg:h-screen mx-auto grid grid-cols-1 gap-12 lg:grid-cols-2 justify-center items-center">
+    <div class="container px-6 lg:h-screen mx-auto grid grid-cols-1 gap-12 lg:grid-cols-2 justify-center items-center lg:mt-0 mt-32">
       <div>
         <p class="font-medium text-[#008080] ">iletişim</p>
 
