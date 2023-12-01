@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <div className="container flex flex-col lg:px-6 px-0 py-10 mx-auto space-y-12 lg:py-16 lg:flex-row lg:items-center my-24">
       <div className="w-full lg:w-1/2">
-        <div className="lg:max-w-lg animate-fade-up">
+        <div className="lg:max-w-lg">
           <h1 className="text-3xl font-semibold tracking-wide text-gray-800  lg:text-4xl">
             Neler Sunuyorum
           </h1>

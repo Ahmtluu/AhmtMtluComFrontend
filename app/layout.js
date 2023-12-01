@@ -1,16 +1,16 @@
-import { Inter } from 'next/font/google'
-import './globals.css'
-import AppHeader from '@/components/AppHeader';
-import AppFooter from '@/components/AppFooter';
-import { Providers } from './Redux/provider';
-import BlurBackground from '@/components/BlurBackground';
+import { Inter } from "next/font/google";
+import "./globals.css";
+import AppHeader from "@/components/AppHeader";
+import AppFooter from "@/components/AppFooter";
+import { Providers } from "./Redux/provider";
+import BlurBackground from "@/components/BlurBackground";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'AhmtMtlu',
-  description: 'AhmtMtluCom',
-}
+  title: "AhmtMtlu",
+  description: "AhmtMtluCom",
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -18,14 +18,11 @@ export default function RootLayout({ children }) {
       <body className={`${inter.className}`}>
         <BlurBackground />
         <AppHeader />
-        <Providers >
-          <div className="mx-auto lg:px-32 px-6 ">
-            {children}
-          </div>
-        </Providers>
-        <AppFooter />
 
+        <Providers>{children}</Providers>
+
+        <AppFooter />
       </body>
     </html>
-  )
+  );
 }

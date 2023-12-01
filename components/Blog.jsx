@@ -12,18 +12,14 @@ export default function Blog() {
             Yazılar
           </h1>
 
-          {
-            data && data.posts.data.length !== 0 && (
-              <a
-
-                href="/blog"
-                className="px-6 py-2 font-medium tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
-              >
-                Tümü
-              </a>
-            )
-          }
-
+          {data && data.posts.data.length !== 0 && (
+            <a
+              href="/blog"
+              className="px-6 py-2 font-medium tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
+            >
+              Tümü
+            </a>
+          )}
         </div>
 
         <hr className="my-8 border-gray-200 " />
@@ -46,7 +42,6 @@ export default function Blog() {
             data.posts.data.map((article, index) => {
               return (
                 <div
-
                   key={article.id}
                   className="hover:shadow-xl duration-500 transition-shadow"
                 >
