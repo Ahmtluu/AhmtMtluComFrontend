@@ -3,17 +3,18 @@ import React from "react";
 import DOMPurify from "dompurify";
 import { useGetPostBySlugQuery } from "@/app/Redux/services/post";
 
-export default function Page(props) {
-  const { data, error, isLoading } = useGetPostBySlugQuery(props.slug);
+export default function Page({ params }) {
+  const { data, error, isLoading } = useGetPostBySlugQuery(params.slug);
+  //TODO:Not Found Error Handling
 
   return (
-    <section class="">
-      <div class="container px-6 py-32 mx-auto ">
+    <section className="">
+      <div className="container px-6 py-32 mx-auto ">
         {!error && isLoading && (
           <div>
             <svg
               aria-hidden="true"
-              class="w-8 h-8 text-gray-200 animate-spin fill-blue-600"
+              className="w-8 h-8 text-gray-200 animate-spin fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -27,36 +28,40 @@ export default function Page(props) {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         )}
-        <div class="lg:flex lg:-mx-6">
+        <div className="lg:flex lg:-mx-6">
           {!error && data && (
-            <div class="lg:w-3/4 lg:px-6">
+            <div className="lg:w-3/4 lg:px-6">
               <img
-                class="object-cover object-center w-full h-80 xl:h-[28rem] rounded-xl"
+                className="object-cover object-center w-full h-80 xl:h-[28rem] rounded-xl"
                 alt=""
-                src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${data.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${data.article.image}`}
               />
-              <p class="mt-6 text-sm text-[#008080] uppercase"></p>
+              <p className="mt-6 text-sm text-[#008080] uppercase"></p>
 
-              <h1 class="max-w-lg mt-4 text-2xl font-semibold leading-tight text-gray-800 ">
+              <h1 className="max-w-lg mt-4 text-2xl font-semibold leading-tight text-gray-800 ">
                 {data.title}
               </h1>
 
-              <div class="flex items-center mt-6">
-                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.body) }}></div>
+              <div className="flex items-center mt-6">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(data.article.body),
+                  }}
+                ></div>
               </div>
             </div>
           )}
         </div>
         {error && (
-          <h3 class="font-bold uppercase text-gray-900">
+          <h3 className="font-bold uppercase text-gray-900">
             Şu anda maalesef aramış olduğunuz yazıya ulaşılamıyor lütfen daha
             sonra tekrar deneyiniz!
           </h3>
         )}
-        <div class="mt-8 lg:w-1/4 lg:mt-0 lg:px-6"></div>
+        <div className="mt-8 lg:w-1/4 lg:mt-0 lg:px-6"></div>
       </div>
     </section>
   );

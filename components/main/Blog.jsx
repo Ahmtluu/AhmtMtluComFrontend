@@ -1,5 +1,6 @@
 import { useGetPostsQuery } from "@/app/Redux/services/post";
 import React from "react";
+import Link from "next/link";
 
 export default function Blog() {
   const { data, error, isLoading } = useGetPostsQuery();
@@ -47,7 +48,7 @@ export default function Blog() {
                 >
                   <img
                     className="object-cover object-center w-full h-64 lg:h-80"
-                    src={`${config.public.apiUrl}/storage/${article.image}`}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
                     alt=""
                   />
 
@@ -65,7 +66,7 @@ export default function Blog() {
                     <div className="flex items-center justify-between mt-4">
                       <Link
                         className="px-6 py-2 font-medium tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
-                        href={`posts/${article.slug}`}
+                        href={`blog/${article.slug}`}
                       >
                         Daha Fazlası
                       </Link>

@@ -3,6 +3,7 @@ import React from "react";
 import moment from "moment";
 import Link from "next/link";
 import { useGetPaginatedPostsQuery } from "../Redux/services/post";
+import DOMPurify from "dompurify";
 
 export default function Blog() {
   const { data, error, isLoading } = useGetPaginatedPostsQuery();
@@ -14,7 +15,7 @@ export default function Blog() {
 
   return (
     <section className="">
-      <div className="container py-0 mt-32 lg:h-4/5 mx-auto block lg:flex px-6">
+      <div className="container py-0 lg:pb-32 mt-32 lg:h-4/5 mx-auto block lg:flex px-6">
         <div className="lg:w-9/12 w-full">
           {isLoading &&
             !error &&
@@ -22,16 +23,16 @@ export default function Blog() {
               return (
                 <div
                   className="flex shadow-sm backdrop-blur-lg bg-grey/80 transition hover:shadow-xl mb-8 animate-pulse"
-                  key={article}
+                  key={index}
                 >
                   <div className="rotate-180 p-2 [writing-mode:_vertical-lr]">
                     <time
                       dateTime="2022-10-10"
                       className="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
                     >
-                      <span>2022</span>
+                      <span></span>
                       <span className="w-px flex-1 bg-gray-900/10"></span>
-                      <span>Oct 10</span>
+                      <span></span>
                     </time>
                   </div>
 
@@ -61,7 +62,7 @@ export default function Blog() {
             data &&
             data.posts.data.map((article, index) => {
               return (
-                <>
+                <div key={index}>
                   <div
                     className="flex bg-white transition hover:shadow-xl mb-8"
                     key={index}
@@ -80,27 +81,33 @@ export default function Blog() {
                     <div className="hidden sm:block sm:basis-56">
                       <img
                         alt="Post Image"
-                        src={`${config.public.apiUrl}/storage/${article.image}`}
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
                         className="aspect-square h-full w-full"
                       />
                     </div>
 
                     <div className="flex flex-1 flex-col justify-between">
-                      <Link href={`posts/${article.slug}`}>
+                      <Link
+                        href={{
+                          pathname: `blog/${article.slug}`,
+                        }}
+                      >
                         <div className="border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
                           <img
                             alt="Post Image"
-                            src={`${this.config.public.apiUrl}/storage/${article.image}`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
                             className="block sm:hidden sm:basis-56 aspect-square h-full w-full"
                           />
+
                           <h3 className="font-bold uppercase text-gray-900">
                             {article.title}
                           </h3>
-
-                          <p
+                          <div
                             className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700"
-                            v-html="article.body"
-                          ></p>
+                            dangerouslySetInnerHTML={{
+                              __html: DOMPurify.sanitize(article.body),
+                            }}
+                          ></div>
                         </div>
                       </Link>
                     </div>
@@ -109,8 +116,8 @@ export default function Blog() {
                   <div className="flex justify-between">
                     <div className="flex">
                       {data.posts && data.posts.prev_page_url !== null && (
-                        <a
-                          href={`/yazilar?page=${data.posts.current_page - 1}`}
+                        <Link
+                          href={`/blog?page=${data.posts.current_page - 1}`}
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
@@ -131,18 +138,18 @@ export default function Blog() {
 
                             <span className="mx-1"> previous </span>
                           </div>
-                        </a>
+                        </Link>
                       )}
 
-                      <a
+                      <Link
                         href={`/yazilar?page=${data.posts.current_page}`}
                         className="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform border border-slate-700 bg-white sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-500 hover:text-white dark:hover:text-gray-200"
                       >
                         {data.posts.current_page}
-                      </a>
+                      </Link>
                       {data.posts && data.posts.next_page_url !== null && (
-                        <a
-                          href={`/yazilar?page=${data.posts.current_page + 1}`}
+                        <Link
+                          href={`/blog?page=${data.posts.current_page + 1}`}
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
@@ -163,7 +170,7 @@ export default function Blog() {
                               />
                             </svg>
                           </div>
-                        </a>
+                        </Link>
                       )}
                     </div>
 
@@ -171,7 +178,7 @@ export default function Blog() {
                       Toplam sayfa: {data.posts.last_page}
                     </p>
                   </div>
-                </>
+                </div>
               );
             })}
           {error && (
