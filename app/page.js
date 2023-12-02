@@ -2,10 +2,10 @@
 import Image from "next/image";
 import "dotenv/config";
 
-import EntryBanner from "@/components/EntryBanner";
-import Hero from "@/components/Hero";
-import Project from "@/components/Project";
-import Blog from "@/components/Blog";
+import EntryBanner from "@/components/main/EntryBanner";
+import Hero from "@/components/main/Hero";
+import Project from "@/components/main/Project";
+import Blog from "@/components/main/Blog";
 
 export default function Home() {
   return (

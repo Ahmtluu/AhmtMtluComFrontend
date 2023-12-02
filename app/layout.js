@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AppHeader from "@/components/AppHeader";
-import AppFooter from "@/components/AppFooter";
+import AppHeader from "@/components/main/AppHeader";
+import AppFooter from "@/components/main/AppFooter";
 import { Providers } from "./Redux/provider";
-import BlurBackground from "@/components/BlurBackground";
+import BlurBackground from "@/components/main/BlurBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
