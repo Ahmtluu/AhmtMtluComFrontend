@@ -1,5 +1,9 @@
 import Link from "next/link";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export default function AppFooter() {
   return (
@@ -23,33 +27,30 @@ export default function AppFooter() {
                 href="https://bionluk.com/ahmtlu"
                 className="mx-2 text-gray-600 transition-colors duration-300  hover:text-[#008080] "
                 aria-label="Bionluk"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                {/* <font-awesome-icon
-                            :icon="['fa', 'store']"
-                            className="icon alt h-4"
-                        /> */}
+                <FontAwesomeIcon icon={faCode} />
               </Link>
 
               <Link
                 href="https://www.linkedin.com/in/ahmet-mutlu-1b223017a/"
                 className="mx-2 text-gray-600 transition-colors duration-300  hover:text-[#008080] "
                 aria-label="linkedin"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                {/* <font-awesome-icon
-                            :icon="['fab', 'linkedin']"
-                            className="icon alt h-4 w-5"
-                        /> */}
+                <FontAwesomeIcon icon={faLinkedin} />
               </Link>
 
               <Link
                 href="https://github.com/ahmtluu"
                 className="mx-2 text-gray-600 transition-colors duration-300  hover:text-[#008080]"
                 aria-label="Github"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                {/* <font-awesome-icon
-                            :icon="['fab', 'github']"
-                            className="icon alt h-4 w-5"
-                        /> */}
+                <FontAwesomeIcon icon={faGithub} />
               </Link>
             </div>
           </div>

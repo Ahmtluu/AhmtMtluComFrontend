@@ -27,7 +27,9 @@ export default function Project() {
             {!isLoading &&
               data &&
               data.projects.data.map((project, index) => {
-                return <ProjectCard project={project} index={index} />;
+                return (
+                  <ProjectCard key={index} project={project} index={index} />
+                );
               })}
           </div>
         )}

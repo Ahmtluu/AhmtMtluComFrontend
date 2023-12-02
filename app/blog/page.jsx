@@ -5,9 +5,8 @@ import Link from "next/link";
 import { useGetPaginatedPostsQuery } from "../Redux/services/post";
 
 export default function Blog() {
-
   const { data, error, isLoading } = useGetPaginatedPostsQuery();
-  const loadingPost = ["item1", "item2", "item3"]
+  const loadingPost = ["item1", "item2", "item3"];
 
   function formatDate(date) {
     return moment(String(date)).format("DD-MM-YYYY");
@@ -51,13 +50,11 @@ export default function Blog() {
                 </div>
               );
             })}
-          {!isLoading &&
-            !error &&
-            data.posts.data.length === 0 && (
-              <h3 className="flex justify-center items-center font-bold uppercase text-slate-700 mt-28">
-                Henüz herhangi bir yazı hazırlanmamıştır
-              </h3>
-            )}
+          {!isLoading && !error && data.posts.data.length === 0 && (
+            <h3 className="flex justify-center items-center font-bold uppercase text-slate-700 mt-28">
+              Henüz herhangi bir yazı hazırlanmamıştır
+            </h3>
+          )}
 
           {!isLoading &&
             !error &&
@@ -67,7 +64,7 @@ export default function Blog() {
                 <>
                   <div
                     className="flex bg-white transition hover:shadow-xl mb-8"
-                    key={article.id}
+                    key={index}
                   >
                     <div className="rotate-180 p-2 [writing-mode:_vertical-lr]">
                       <time

@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import "dotenv/config";
 
 import EntryBanner from "@/components/main/EntryBanner";

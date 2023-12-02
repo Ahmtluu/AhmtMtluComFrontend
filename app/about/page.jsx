@@ -1,7 +1,6 @@
 import React from "react";
 
-import Technologies from "@/components/Technologies";
-import Image from "next/image";
+import Technologies from "@/components/main/Technologies";
 import { ServicesList } from "@/constants";
 
 export default function About() {

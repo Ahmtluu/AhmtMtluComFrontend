@@ -1,6 +1,10 @@
 "use client";
 import { motion, useInView, useAnimation } from "framer-motion";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import { useEffect, useRef } from "react";
+
+config.autoAddCss = false;
 
 const variants = {
   hidden: { opacity: 0, x: -200, y: 0 },
