@@ -1,6 +1,7 @@
 import { useGetPostsQuery } from "@/app/Redux/services/post";
 import React from "react";
 import Link from "next/link";
+import DOMPurify from "dompurify";
 
 export default function Blog() {
   const { data, error, isLoading } = useGetPostsQuery();
@@ -44,28 +45,39 @@ export default function Blog() {
               return (
                 <div
                   key={article.id}
-                  className="hover:shadow-xl duration-500 transition-shadow"
+                  className="hover:shadow-xl duration-500 transition-shadow border rounded-md"
                 >
                   <img
-                    className="object-cover object-center w-full h-64 lg:h-80"
+                    className="object-cover object-center w-full h-64 lg:h-48"
                     src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
                     alt=""
                   />
 
                   <div className="mt-8 px-4 pb-4">
-                    <span className="text-teal-600 uppercase font-semibold">
+                    <Link
+                      href={{
+                        pathname: "blog",
+                        query: `category=${article.category.name}`,
+                      }}
+                      className="text-teal-600 uppercase font-semibold"
+                    >
                       {article.category.name}
-                    </span>
+                    </Link>
 
                     <h1 className="mt-4 text-xl font-semibold text-gray-800 ">
                       {article.title}
                     </h1>
 
-                    <p className="mt-2 text-gray-500 ">{article.description}</p>
+                    <div
+                      className="mt-2 text-gray-500 line-clamp-3"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(article.body),
+                      }}
+                    ></div>
 
-                    <div className="flex items-center justify-between mt-4">
+                    <div className="flex items-center justify-end mt-4 ">
                       <Link
-                        className="px-6 py-2 font-medium tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
+                        className="px-6 py-2 font-medium rounded-md tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
                         href={`blog/${article.slug}`}
                       >
                         Daha Fazlası

@@ -2,11 +2,23 @@
 import React from "react";
 import moment from "moment";
 import Link from "next/link";
-import { useGetPaginatedPostsQuery } from "../Redux/services/post";
+import { useSearchParams } from "next/navigation";
+import { useGetPostsQuery } from "../Redux/services/post";
 import DOMPurify from "dompurify";
 
 export default function Blog() {
-  const { data, error, isLoading } = useGetPaginatedPostsQuery();
+  const searchParams = useSearchParams();
+  const pageNumber = searchParams.get("page");
+  const categoryName = searchParams.get("category");
+
+  console.log(pageNumber + " " + categoryName);
+
+  const { data, error, isLoading } = useGetPostsQuery({
+    pageNumber,
+    categoryName,
+  });
+  console.log;
+
   const loadingPost = ["item1", "item2", "item3"];
 
   function formatDate(date) {
@@ -87,29 +99,36 @@ export default function Blog() {
                     </div>
 
                     <div className="flex flex-1 flex-col justify-between">
-                      <Link
-                        href={{
-                          pathname: `blog/${article.slug}`,
-                        }}
-                      >
-                        <div className="border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
+                      <div className="border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
+                        <Link
+                          href={`/blog?category=${article.category.name}`}
+                          className="text-teal-700 uppercase text-sm font-medium"
+                        >
+                          {article.category.name}
+                        </Link>
+                        <Link
+                          href={{
+                            pathname: `blog/${article.slug}`,
+                          }}
+                        >
                           <img
                             alt="Post Image"
                             src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
                             className="block sm:hidden sm:basis-56 aspect-square h-full w-full"
                           />
 
-                          <h3 className="font-bold uppercase text-gray-900">
+                          <h1 className="font-bold uppercase text-gray-900">
                             {article.title}
-                          </h3>
+                          </h1>
+
                           <div
                             className="mt-2 line-clamp-3 text-sm/relaxed text-gray-700"
                             dangerouslySetInnerHTML={{
                               __html: DOMPurify.sanitize(article.body),
                             }}
-                          ></div>
-                        </div>
-                      </Link>
+                          />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                   <div className="border-b-2 my-6" />
@@ -117,7 +136,14 @@ export default function Blog() {
                     <div className="flex">
                       {data.posts && data.posts.prev_page_url !== null && (
                         <Link
-                          href={`/blog?page=${data.posts.current_page - 1}`}
+                          href={{
+                            pathname: "/blog",
+                            query: categoryName
+                              ? `category=${categoryName}&page=${
+                                  data.posts.current_page - 1
+                                }`
+                              : `page=${data.posts.current_page - 1}`,
+                          }}
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
@@ -142,14 +168,21 @@ export default function Blog() {
                       )}
 
                       <Link
-                        href={`/yazilar?page=${data.posts.current_page}`}
+                        href={`/blog?page=${data.posts.current_page}`}
                         className="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform border border-slate-700 bg-white sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-500 hover:text-white dark:hover:text-gray-200"
                       >
                         {data.posts.current_page}
                       </Link>
                       {data.posts && data.posts.next_page_url !== null && (
                         <Link
-                          href={`/blog?page=${data.posts.current_page + 1}`}
+                          href={{
+                            pathname: "/blog",
+                            query: categoryName
+                              ? `category=${categoryName}&page=${
+                                  data.posts.current_page + 1
+                                }`
+                              : `page=${data.posts.current_page + 1}`,
+                          }}
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
