@@ -1,3 +1,5 @@
+export const loadingPostSkeletonNumber = ["item1", "item2", "item3"];
+
 export const TechnologiesList = [
   [
     {
