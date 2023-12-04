@@ -9,7 +9,7 @@ export default function ProjectCard({ project, index }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="relative group transform transition hover:scale-105 duration-700 bg-slate-700 rounded-md">
+      <div className="relative group transform transition hover:scale-105 duration-700 bg-slate-700 rounded-md ">
         <img
           className="w-full md:h-64 backdrop-blur-md duration-700 group-hover:opacity-20 rounded-md"
           src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${project.image}`}

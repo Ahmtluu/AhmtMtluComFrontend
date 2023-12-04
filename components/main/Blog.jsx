@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import DOMPurify from "dompurify";
+import Framer from "@/components/main/PageFramer";
 
 export default function Blog() {
   const searchParams = useSearchParams();
@@ -42,7 +43,7 @@ export default function Blog() {
 
           {error && (
             <h3 className="font-bold uppercase text-gray-900">
-              Şu anda maalesef yazılara ulaşılamıyor lütfen daha sonra tekrar
+              Şu anda maalesef projelere ulaşılamıyor lütfen daha sonra tekrar
               deneyiniz!
             </h3>
           )}
@@ -50,48 +51,47 @@ export default function Blog() {
           {data &&
             data.posts.data.map((article, index) => {
               return (
-                <div
-                  key={article.id}
-                  className="hover:shadow-xl duration-500 transition-shadow border rounded-md"
-                >
-                  <img
-                    className="object-cover object-center w-full h-64 lg:h-48"
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
-                    alt=""
-                  />
+                <Framer key={article.id}>
+                  <div className="hover:shadow-xl duration-500 transition-shadow border rounded-md">
+                    <img
+                      className="object-cover object-center w-full h-64 lg:h-48"
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
+                      alt=""
+                    />
 
-                  <div className="mt-8 px-4 pb-4">
-                    <Link
-                      href={{
-                        pathname: "blog",
-                        query: `category=${article.category.name}`,
-                      }}
-                      className="text-teal-600 uppercase font-semibold"
-                    >
-                      {article.category.name}
-                    </Link>
-
-                    <h1 className="mt-4 text-xl font-semibold text-gray-800 ">
-                      {article.title}
-                    </h1>
-
-                    <div
-                      className="mt-2 text-gray-500 line-clamp-3"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(article.body),
-                      }}
-                    ></div>
-
-                    <div className="flex items-center justify-end mt-4 ">
+                    <div className="mt-8 px-4 pb-4">
                       <Link
-                        className="px-6 py-2 font-medium rounded-md tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
-                        href={`blog/${article.slug}`}
+                        href={{
+                          pathname: "blog",
+                          query: `category=${article.category.name}`,
+                        }}
+                        className="text-teal-600 uppercase font-semibold"
                       >
-                        Daha Fazlası
+                        {article.category.name}
                       </Link>
+
+                      <h1 className="mt-4 text-xl font-semibold text-gray-800 ">
+                        {article.title}
+                      </h1>
+
+                      <div
+                        className="mt-2 text-gray-500 line-clamp-3"
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(article.body),
+                        }}
+                      ></div>
+
+                      <div className="flex items-center justify-end mt-4 ">
+                        <Link
+                          className="px-6 py-2 font-medium rounded-md tracking-wide text-slate-900 capitalize transition-colors duration-300 transform bg-white border-2 hover:bg-slate-700 hover:text-white hover:border-slate-700"
+                          href={`blog/${article.slug}`}
+                        >
+                          Daha Fazlası
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Framer>
               );
             })}
         </div>

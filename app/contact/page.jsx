@@ -1,54 +1,14 @@
 "use client";
-import React, { useState, useRef } from "react";
-import { useForm } from "react-hook-form";
+
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
-import emailjs from "@emailjs/browser";
+
 import ContactForm from "@/components/sub/ContactForm";
 
 export default function Contact() {
-  const {
-    register,
-    reset,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
-  const [isSuccessed, setSuccessStatus] = useState(null);
-  const [isSending, setSendingStatus] = useState(false);
-  const form = useRef();
-
-  const sendEmail = (value, e) => {
-    e.preventDefault();
-    setSendingStatus(true);
-
-    try {
-      emailjs
-        .sendForm(
-          process.env.NEXT_PUBLIC_SERVICE_USER_ID,
-          process.env.NEXT_PUBLIC_SERVICE_EMAIL_TEMPLATE,
-          form.current,
-          process.env.NEXT_PUBLIC_SERVICE_PASSWORD
-        )
-        .then(
-          () => {
-            reset();
-            setSendingStatus(false);
-            setSuccessStatus(true);
-          },
-          (error) => {
-            setSuccessStatus(false);
-            setSendingStatus(false);
-          }
-        );
-    } catch (error) {
-      setSuccessStatus(false);
-      setSendingStatus(false);
-    }
-  };
-
   return (
     <div className="container lg:px-6 mx-auto grid grid-cols-1 gap-12 lg:grid-cols-2 justify-center items-center lg:mt-0 mt-32">
       <div>

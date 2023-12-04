@@ -110,7 +110,7 @@ export const ServicesList = [
     title: "Modern ve kullanıcı dostu web siteleri",
   },
   {
-    title: "Duyarlı tasarım (Responsive Design) ile mobil uyumlu çözümler",
+    title: "Responsive Design ile mobil uyumlu çözümler",
   },
   {
     title: "Özelleştirilmiş web uygulamaları",

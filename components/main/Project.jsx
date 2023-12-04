@@ -2,6 +2,7 @@ import React from "react";
 import ProjectSkeloton from "../Skeletons/ProjectSkeloton";
 import { useGetProjectsQuery } from "@/app/Redux/services/project";
 import ProjectCard from "../sub/ProjectCard";
+import Framer from "@/components/main/PageFramer";
 
 export default function Project() {
   const { data, error, isLoading } = useGetProjectsQuery();
@@ -17,7 +18,7 @@ export default function Project() {
           geçirmek için stratejik düşünce ve yaratıcı yaklaşımlar kullanıyorum.
         </p>
         {!isLoading && !error && (
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 sm:grid-cols-2 lg:grid-cols-3 h-64">
             {data && data.projects.data.length === 0 && (
               <h3 className="font-bold uppercase text-slate-700 mt-28">
                 Henüz herhangi bir proje yayımlanmamış
@@ -28,7 +29,9 @@ export default function Project() {
               data &&
               data.projects.data.map((project, index) => {
                 return (
-                  <ProjectCard key={index} project={project} index={index} />
+                  <Framer key={index}>
+                    <ProjectCard project={project} index={index} />
+                  </Framer>
                 );
               })}
           </div>

@@ -1,3 +1,4 @@
+import { ServicesList } from "@/constants";
 import React from "react";
 
 export default function Hero() {
@@ -15,83 +16,31 @@ export default function Hero() {
           </p>
 
           <div className="grid gap-6 mt-8 sm:grid-cols">
-            <div className="flex items-center text-gray-800 -px-3 ">
-              <svg
-                className="w-5 h-5 mx-3"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
+            {ServicesList.map((service, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex items-center text-gray-800 -px-3 "
+                >
+                  <svg
+                    className="w-5 h-5 mx-3"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
 
-              <span className="mx-3">Modern ve kullanıcı dostu web siteleri</span>
-            </div>
-
-            <div className="flex items-center text-gray-800 -px-3 ">
-              <svg
-                className="lg:w-5 lg-h-5 mx-3 w-6 h-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-
-              <span className="mx-3">
-                Responsive Design ile mobil uyumlu çözümler
-              </span>
-            </div>
-
-            <div className="flex items-center text-gray-800 -px-3 ">
-              <svg
-                className="w-5 h-5 mx-3"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-
-              <span className="mx-3">Özelleştirilmiş web uygulamaları</span>
-            </div>
-
-            <div className="flex items-center text-gray-800 -px-3 ">
-              <svg
-                className="w-5 h-5 mx-3"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-
-              <span className="mx-3">Teknik destek ve bakım hizmetleri</span>
-            </div>
+                  <span className="mx-3">{service.title}</span>
+                </div>
+              );
+            })}
           </div>
           <div className="mt-5">
             <p className="inline-flex items-center justify-center py-3 mr-5 text-base font-medium text-center text-black rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 ">

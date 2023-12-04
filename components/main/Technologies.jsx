@@ -20,7 +20,7 @@ export default function Technologies() {
                   return (
                     <a href={tech.url}>
                       <img
-                        className={`rounded-lg ${tech.attributes}`}
+                        className={` ${tech.attributes}`}
                         src={tech.image}
                         alt=""
                       />
