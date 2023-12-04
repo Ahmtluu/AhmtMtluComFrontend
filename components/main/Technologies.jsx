@@ -9,7 +9,7 @@ export default function Technologies() {
             İşte bu, BENİM DÜNYAM!
           </h1>
           <h1 className="sm:text-3xl text-2xl name-font mb-2 text-[#008080] text-center lg:w-1/2 sm:w-full font-black">
-            <code>&lt;?php echo "Hello World"; ?&gt;</code>
+            <code>&lt;?php echo "Hello World"; </code>
           </h1>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:gap-16 gap-12">
