@@ -11,13 +11,12 @@ export default function Blog() {
   const pageNumber = searchParams.get("page");
   const categoryName = searchParams.get("category");
 
-  console.log(pageNumber + " " + categoryName);
-
   const { data, error, isLoading } = useGetPostsQuery({
-    pageNumber,
-    categoryName,
+    pageNumber: pageNumber,
+    category: categoryName,
   });
-  console.log;
+
+  //TODO:Categorized Page
 
   const loadingPost = ["item1", "item2", "item3"];
 
@@ -162,7 +161,7 @@ export default function Blog() {
                               />
                             </svg>
 
-                            <span className="mx-1"> previous </span>
+                            <span className="mx-1"> Geri </span>
                           </div>
                         </Link>
                       )}
@@ -186,7 +185,7 @@ export default function Blog() {
                           className="px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-700 hover:text-white dark:hover:text-gray-200"
                         >
                           <div className="flex items-center -mx-1">
-                            <span className="mx-1"> Next </span>
+                            <span className="mx-1"> İleri </span>
 
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

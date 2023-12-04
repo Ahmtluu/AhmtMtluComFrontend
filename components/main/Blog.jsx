@@ -1,10 +1,17 @@
 import { useGetPostsQuery } from "@/app/Redux/services/post";
 import React from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import DOMPurify from "dompurify";
 
 export default function Blog() {
-  const { data, error, isLoading } = useGetPostsQuery();
+  const searchParams = useSearchParams();
+  const pageNumber = searchParams.get("page");
+  const categoryName = searchParams.get("category");
+  const { data, error, isLoading } = useGetPostsQuery({
+    pageNumber: pageNumber,
+    category: categoryName,
+  });
 
   return (
     <section className=" pb-32">

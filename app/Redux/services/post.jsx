@@ -9,10 +9,14 @@ export const postApi = createApi({
   }),
   endpoints: (builder) => ({
     getPosts: builder.query({
-      query: ({ pageNumber, categoryName }) =>
-        categoryName == null
-          ? `get_all_articles?page=${pageNumber}`
-          : `get_all_articles?page=${pageNumber}&category=${categoryName}`,
+      query: (args) => {
+        const { category, pageNumber } = args;
+        return {
+          url: !category
+            ? `get_all_articles?page=${pageNumber}`
+            : `get_all_articles?page=${pageNumber}&category=${category}`,
+        };
+      },
     }),
     getPostBySlug: builder.query({
       query: (slug) => `article/${slug}`,
