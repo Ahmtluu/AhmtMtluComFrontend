@@ -1,10 +1,8 @@
 "use client";
 import React from "react";
-import moment from "moment";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useGetPostsQuery } from "../Redux/services/post";
-import DOMPurify from "dompurify";
 import BlogPageLoadingSkeleton from "@/components/main/BlogPageLoading";
 import { loadingPostSkeletonNumber } from "@/constants/index";
 import BlogCard from "@/components/sub/BlogCard";
@@ -19,16 +17,11 @@ export default function Blog() {
     category: categoryName,
   });
 
-  function formatDate(date) {
-    return moment(String(date)).format("DD-MM-YYYY");
-  }
-
   return (
     <section className="">
-      <div className="container py-0 lg:pb-32 mt-32 lg:h-4/5 mx-auto block lg:flex px-6">
+      <div className="container py-0 lg:pb-32 mt-32 lg:h-4/5 mx-auto block lg:flex lg:px-6">
         <div className="lg:w-9/12 w-full">
           {isLoading &&
-            !error &&
             loadingPostSkeletonNumber.map((index) => {
               return <BlogPageLoadingSkeleton key={index} />;
             })}
@@ -38,12 +31,12 @@ export default function Blog() {
             </h3>
           )}
 
-          {!isLoading && !error && (
+          {data && (
             <div>
               {data.posts.data.map((article, index) => {
                 return <BlogCard article={article} />;
               })}
-              <div className="flex justify-between">
+              <div className="flex justify-between mb-8">
                 <div className="flex">
                   {data.posts && data.posts.prev_page_url !== null && (
                     <Link
@@ -80,7 +73,7 @@ export default function Blog() {
 
                   <Link
                     href={`/blog?page=${data.posts.current_page}`}
-                    className="hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform border border-slate-700 bg-white sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-500 hover:text-white dark:hover:text-gray-200"
+                    className=" px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform border border-slate-700 bg-white sm:inline dark:bg-gray-800 dark:text-gray-200 hover:bg-slate-700 dark:hover:bg-teal-500 hover:text-white dark:hover:text-gray-200"
                   >
                     {data.posts.current_page}
                   </Link>
@@ -124,12 +117,7 @@ export default function Blog() {
               </div>
             </div>
           )}
-          {error && (
-            <h3 class="font-bold uppercase text-gray-900 px-6">
-              Şu anda maalesef yazılara ulaşılamıyor lütfen daha sonra tekrar
-              deneyiniz!
-            </h3>
-          )}
+          {error && notFound()}
         </div>
       </div>
 

@@ -1,36 +1,38 @@
 import React from "react";
+import DOMPurify from "dompurify";
+import Link from "next/link";
+import moment from "moment";
 
 export default function BlogCard({ article }) {
+  function formatDate(date) {
+    return moment(String(date)).format("DD-MM-YYYY");
+  }
+
   return (
     <div>
       <div className="flex bg-white transition hover:shadow-xl mb-8">
-        <div className="rotate-180 p-2 [writing-mode:_vertical-lr]">
-          <time
-            dateTime="2022-10-10"
-            className="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
-          >
-            <span>2022</span>
-            <span className="w-px flex-1 bg-gray-900/10"></span>
-            <span>Oct 10</span>
-          </time>
-        </div>
-
-        <div className="hidden sm:block sm:basis-56">
+        <div className="hidden sm:block sm:basis-56 h-52">
           <img
             alt="Post Image"
             src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
-            className="aspect-square h-full w-full"
+            className="bg-cover w-full h-full"
           />
         </div>
 
-        <div className="flex flex-1 flex-col justify-between">
-          <div className="border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
-            <Link
-              href={`/blog?category=${article.category.name}`}
-              className="text-teal-700 uppercase text-sm font-medium"
-            >
-              {article.category.name}
-            </Link>
+        <div className="flex flex-1 flex-col justify-between border-gray-900/10 border">
+          <div className=" p-4 sm:border-l-transparent sm:p-6">
+            <div className="flex gap-x-2 lg:mb-6 mb-2">
+              <Link
+                href={`/blog?category=${article.category.name}`}
+                className="text-teal-700 uppercase text-sm font-medium"
+              >
+                {article.category.name}
+              </Link>
+              <p className="text-sm text-slate-500">
+                {formatDate(article.updated_at)}
+              </p>
+            </div>
+
             <Link
               href={{
                 pathname: `blog/${article.slug}`,
@@ -39,10 +41,10 @@ export default function BlogCard({ article }) {
               <img
                 alt="Post Image"
                 src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${article.image}`}
-                className="block sm:hidden sm:basis-56 aspect-square h-full w-full"
+                className="block sm:hidden sm:basis-56 aspect-square lg:h-full h-40 w-full"
               />
 
-              <h1 className="font-bold uppercase text-gray-900">
+              <h1 className="font-bold uppercase text-gray-900 lg:mb-5 lg:pt-0 pt-4 ">
                 {article.title}
               </h1>
 
@@ -56,7 +58,6 @@ export default function BlogCard({ article }) {
           </div>
         </div>
       </div>
-      <div className="border-b-2 my-6" />
     </div>
   );
 }
