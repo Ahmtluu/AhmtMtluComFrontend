@@ -1,6 +1,7 @@
 import emailjs from "@emailjs/browser";
 import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactForm() {
   const {
@@ -12,6 +13,12 @@ export default function ContactForm() {
   const [isSuccessed, setSuccessStatus] = useState(null);
   const [isSending, setSendingStatus] = useState(false);
   const form = useRef();
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+
+  function onChange(value) {
+    setRecaptchaToken(value);
+  }
+
   const sendEmail = (value, e) => {
     e.preventDefault();
     setSendingStatus(true);
@@ -26,9 +33,9 @@ export default function ContactForm() {
         )
         .then(
           () => {
-            reset();
             setSendingStatus(false);
-            setSuccessStatus(true);
+            recaptchaToken ? setSuccessStatus(true) : setSuccessStatus(false);
+            reset();
           },
           (error) => {
             setSuccessStatus(false);
@@ -57,7 +64,8 @@ export default function ContactForm() {
           role="alert"
         >
           <span className="font-medium">Üzgünüm!</span> Maalesef bir hata
-          nedeniyle gönderilemedi!
+          nedeniyle gönderilemedi! Lütfen 'Ben robot değilim' bölümünün
+          tamamlandığından emin ol!
         </div>
       )}
 
@@ -77,7 +85,7 @@ export default function ContactForm() {
                 Bu alan zorunludur!
               </p>
             )}
-            {errors.message?.type === "minLength" && (
+            {errors.user_name && errors.message?.type === "minLength" && (
               <p role="alert" className="text-red-600 pt-2">
                 Girmeniz gereken minimum karakter sayısı: 5!
               </p>
@@ -97,14 +105,13 @@ export default function ContactForm() {
                 Bu alan zorunludur!
               </p>
             )}
-            {errors.message?.type === "minLength" && (
+            {errors.user_name && errors.message?.type === "minLength" && (
               <p role="alert" className="text-red-600 pt-2">
                 Girmeniz gereken minimum karakter sayısı: 5!
               </p>
             )}
           </div>
         </div>
-
         <div className="mt-4">
           <label className="block mb-2 text-sm text-gray-600 ">
             Email Adresi*
@@ -128,7 +135,6 @@ export default function ContactForm() {
           )}
           {errors.email && <span role="alert">{errors.email.message}</span>}
         </div>
-
         <div className="w-full mt-4">
           <label className="block mb-2 text-sm text-gray-600 ">
             Mesajınız*
@@ -143,12 +149,19 @@ export default function ContactForm() {
               Bu alan zorunludur!
             </p>
           )}
-          {errors.message?.type === "minLength" && (
+          {errors.message && errors.message?.type === "minLength" && (
             <p role="alert" className="text-red-600 pt-2">
               Girmeniz gereken minimum karakter sayısı: 25!
             </p>
           )}
         </div>
+
+        <ReCAPTCHA
+          className="mt-4"
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY}
+          onChange={onChange}
+        />
+
         {isSending ? (
           <button
             type="submit"
